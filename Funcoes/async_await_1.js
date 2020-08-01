@@ -48,15 +48,26 @@ function esperarPor(tempo = 2000){
 // }
 
 
+function retornarValor(){
+    return new Promise(resolve =>{
+        setTimeout(() => resolve(20), 5000)
+    })
+}
+
+//Ou
+
 // Isso é equivalente a resolver uma promise, mas sem chamar a função resolve()
 async function retornarValorRapido(){
     return 20
 }
 
+
 // Colocando await nas promises, o código será executado de forma síncrona.
 async function executar(){
-    let valor = await retornarValorRapido() /*Se não colocar await, a função retornarValorRapido, por estar marcada como async, 
-                                              irá retornar uma promise pendente de ser resolvida*/
+    let valor = await retornarValorRapido()  /*Se não colocar await, a função retornarValorRapido, por estar marcada como async, 
+                                              irá retornar uma promise pendente de ser resolvida*/    
+
+    // let valor = await retornarValor()
 
     await esperarPor(1500)
     console.log(`Async/Await 1...${valor + 10}`)
@@ -70,11 +81,13 @@ async function executar(){
     return valor + 100
 }
 
-// executar().then(console.log)
 
 async function executarDeVerdade(){
+    // executar()
     const valor = await executar()
     console.log(valor)
 }
 
+// executar().then(console.log) //Acessando o valor diretamente de uma promise
+// executar()
 executarDeVerdade()
