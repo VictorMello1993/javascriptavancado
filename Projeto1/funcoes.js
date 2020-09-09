@@ -1,9 +1,14 @@
 const fs = require('fs');
 const pth = require('path')
 
-// //Leitura do diretório (forma síncrona)
+//Leitura do diretório (forma síncrona)
 function readDirectorySync(path) {
-    let files = fs.readdirSync(path);
+    //Com mutabilidade
+    // let files = fs.readdirSync(path);
+    // return files.map(f => pth.join(path, f))
+    
+    //Sem mutabilidade
+    const files = fs.readdirSync(path);
     return files.map(f => pth.join(path, f))
 }
 
@@ -11,9 +16,15 @@ function readDirectorySync(path) {
 function readDirectoryAsync(path) {
     return new Promise((resolve, reject) => {
         try {
-            let files = fs.readdirSync(path);
-            files = files.map(f => pth.join(path, f))
-            resolve(files)
+            //Sem mutabilidade
+            const files = fs.readdirSync(path);
+            const completeFiles = files.map(f => pth.join(path, f))
+            resolve(completeFiles)
+
+            // //Com mutabilidade
+            // let files = fs.readdirSync(path);
+            // files = files.map(f => pth.join(path, f))
+            // resolve(files)
         } catch (e) {
             reject(e)
         }
@@ -106,29 +117,65 @@ function removeOnlyNumbers(lines) {
 // Forma tradicional
 //----------------------------------------------------------------------------------------------
 function removeTokens(lines, tokens) {
+    //Sem mutabilidade
     return lines.map(ln => {
-        let textWithoutTokens = ln
-        tokens.forEach(tk => {
-            textWithoutTokens = textWithoutTokens.split(tk).join('')
-        })
-        return textWithoutTokens
+        return tokens.reduce((acc, token) => {
+            return acc.split(token).join('')
+        }, ln)
     })
+
+
+    //Com mutabilidade
+    // return lines.map(ln => {
+    //     let textWithoutTokens = ln
+    //     tokens.forEach(tk => {
+    //         textWithoutTokens = textWithoutTokens.split(tk).join('')
+    //     })
+    //     return textWithoutTokens
+    // })
 }
 
 //Ou
 //Função retornando uma outra função
 function removeTokens(tokens) {
+    //Sem mutabilidade
     return function (lines) {
         return lines.map(ln => {
-            let textWithoutTokens = ln
-            tokens.forEach(tk => {
-                textWithoutTokens = textWithoutTokens.split(tk).join('')
-            })
-            return textWithoutTokens
+            return tokens.reduce((acc, token) => {
+                return acc.split(token).join('')
+            }, ln)
         })
     }
+
+    //Com mutabilidade
+    // return function (lines) {
+    //     return lines.map(ln => {
+    //         let textWithoutTokens = ln
+    //         tokens.forEach(tk => {
+    //             textWithoutTokens = textWithoutTokens.split(tk).join('')
+    //         })
+    //         return textWithoutTokens
+    //     })
+    // }
 }
 //----------------------------------------------------------------------------------------------
+
+function groupElements(words) {
+    return Object.values(words.reduce((acc, word) => {
+        const el = word.toLowerCase()
+        const qte = acc[el] ? acc[el].qte + 1 : 1
+        acc[el] = { element: el, qte }
+        return acc
+    }, {}))
+}
+
+function orderByQte(attr, order = 'asc') {
+    return function (array) {
+        const asc = (o1, o2) => o1[attr] - o2[attr]
+        const desc = (o1, o2) => o2[attr] - o1[attr]
+        return array.sort(order === 'asc' ? asc : desc)
+    }
+}
 
 module.exports = {
     readDirectorySync,
@@ -142,5 +189,7 @@ module.exports = {
     removeOnlyNumbers,
     removeTokens,
     mergeContents,
+    groupElements,
+    orderByQte
 }
 
