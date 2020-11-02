@@ -1,5 +1,18 @@
-const fs = require('fs');
+const fs = require('fs')
 const pth = require('path')
+
+function addZero(num){
+  if(num <= 9){
+    return '0' + num;
+  }
+  else{
+    return num;
+  }
+}
+
+function getDateNow(){
+    return (addZero(new Date().getDate())) + '/' + (addZero(new Date().getMonth())) + '/' + new Date().getFullYear()
+}
 
 //Leitura do diretório (forma síncrona)
 function readDirectorySync(path) {
@@ -25,8 +38,9 @@ function readDirectoryAsync(path) {
             // let files = fs.readdirSync(path);
             // files = files.map(f => pth.join(path, f))
             // resolve(files)
+
         } catch (e) {
-            reject(e)
+            reject('Erro ao ler um diretório')
         }
     })
 }
@@ -47,10 +61,14 @@ function filterFilesByExtension(extension) {
 }
 //----------------------------------------------------------------------------------------------
 
-function readFileByPathAsync(path) {
-    return new Promise((resolve, reject) => {
-        const content = fs.readFileSync(path, { encoding: 'utf-8' })
-        resolve(content.toString())
+function readFileByPathAsync(path) {    
+    return new Promise((resolve, reject) => {        
+        try{
+            const content = fs.readFileSync(path, { encoding: 'utf-8' })
+            resolve(content.toString())
+        } catch(e){
+            reject('Erro na leitura de um arquivo: ')
+        }
     })
 }
 
@@ -177,7 +195,28 @@ function orderByQte(attr, order = 'asc') {
     }
 }
 
+
+//------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//Utilizando a composição de funções
+function composite(...fns){
+    return function(value){
+        return fns.reduce(async (acc, fn) => {
+            //Verificando se o tipo do acumulador é uma promise
+            if(Promise.resolve(acc) === acc){
+                return fn(await acc) //Se for uma promise, aguardar a promise a ser resolvida para passar o valor obtido dela para cada função fn
+            }
+            else{
+                return fn(acc) //Se for valor primitivo, executar de forma síncrona
+            } 
+        }, value)
+    }
+}
+
 module.exports = {
+    composite,
     readDirectorySync,
     readDirectoryAsync,
     filterFilesByExtension,
@@ -190,6 +229,7 @@ module.exports = {
     removeTokens,
     mergeContents,
     groupElements,
-    orderByQte
+    orderByQte,
+    getDateNow
 }
 
