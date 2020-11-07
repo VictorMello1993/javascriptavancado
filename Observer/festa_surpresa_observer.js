@@ -50,7 +50,7 @@ async function porteiro(observers) {
   while (true) {
     const resp = await getAnswer("O morador chegou? (s/N/q)");
     if (resp.toLowerCase() === "s") {
-      (observers || []).forEach(obs => obs({resp, data: fn.getDateNow()}));
+      (observers || []).forEach(obs => obs({resp, data: fn.getDateNow()})); //Os observers são notificados
     } else if (resp.toLowerCase() === "q") {
       break;
     }
@@ -60,5 +60,6 @@ async function porteiro(observers) {
 porteiro([morador, sindico]);
 
 //Componentes do padrão observer:
-//Subject: é alguém que registra dois observers (no caso, é o porteiro) e é responsável pelo monitoramento dos eventos
+/*Subject: é alguém que registra dois observers (no caso, é o porteiro) e é responsável pelo monitoramento dos eventos e notifica os
+           observadores quando o evento ocorrer*/
 //Observers: morador e síndico
