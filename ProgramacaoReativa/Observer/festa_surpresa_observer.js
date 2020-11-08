@@ -1,5 +1,5 @@
 const readline = require("readline");
-const fn = require("../Projeto1/funcoes");
+const fn = require("../../Projeto1/funcoes");
 
 //------------------------------------------------------TESTE OBSERVER-----------------------------------------------------------------------------------------------      
 function getAnswer(ask) {
