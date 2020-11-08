@@ -1,4 +1,4 @@
-// Simulando stream de dados (em JS puro)
+// Gerando stream de dados simulando observables utilizando JS puro
 
 //---------------------------------------------------------------------------------------------------------------------------------------------------
 //Versão 1
@@ -70,31 +70,31 @@ function getNumbers() {
     }
 }
 
-//Execução 1 (observable 1)
+//Execução 1 (subscription 1)
 const temp1 = getNumbers();
-const exec11 = temp1.start((number) => {
+const sub1 = temp1.start((number) => {
     console.log(`#1.1: ${number * 2}`)
 }, 1000)
 
-const exec12 = temp1.start((number) => {
+const sub12 = temp1.start((number) => {
     console.log(`#1.2: ${number + 100}`)
 }, 500)
 //------------------------------------------------------------------------------------------------------------------------------
 
-//Execução 2 (observable 2)
+//Execução 2 (subscription 2)
 const temp2 = getNumbers();
-const exec2 = temp2.start((number) => {
+const sub2 = temp2.start((number) => {
     console.log(`#2: ${number + 100}`)
 }, 2000)
 //------------------------------------------------------------------------------------------------------------------------------
 
-//Parando os observables
+//Parando as execuções (subscriptions)
 setTimeout(() => {
-    exec11.stop()
-    exec2.stop()
+    sub1.stop()
+    sub2.stop()
 }, 10000)
 
 setTimeout(() => {
-    exec12.stop()
+    sub12.stop()
 }, 12000)
 //---------------------------------------------------------------------------------------------------------------------------------------------------

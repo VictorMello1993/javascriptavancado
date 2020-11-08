@@ -1,0 +1,23 @@
+{
+  "name": "javascriptavancado",
+  "version": "1.0.0",
+  "description": "Curso de JavaScript nível avançado na plataforma Udemy, ministrado pelo professor Leonardo Leitão, da COD3R cursos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VictorMello1993/javascriptavancado.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VictorMello1993/javascriptavancado/issues"
+  },
+  "homepage": "https://github.com/VictorMello1993/javascriptavancado#readme",
+  "dependencies": {
+    "rxjs": "^6.6.3"
+  }
+}
