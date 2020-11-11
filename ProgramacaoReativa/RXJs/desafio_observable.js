@@ -4,7 +4,7 @@ const rxjs = require('rxjs');
 
 //MINHA RESOLUÇÃO
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-// function between(min, max) {
+// function getNumbersBetween(min, max) {
 //     return new rxjs.Observable(subscriber => {
 //         while (min <= max) {
 //             subscriber.next(min)
@@ -14,11 +14,11 @@ const rxjs = require('rxjs');
 //     })
 // }
 
-// between(4, 10).subscribe(console.log)
+// getNumbersBetween(4, 10).subscribe(console.log)
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 //CORREÇÃO
-function between(min, max) {
+function getNumbersBetween(min, max) {
     return new rxjs.Observable(subscriber => {
         Array(max - min + 1).fill().map((_, i) => {
             subscriber.next(min + i)
@@ -27,7 +27,7 @@ function between(min, max) {
     })
 }
 
-between(4, 10).subscribe(
+getNumbersBetween(4, 10).subscribe(
     num => console.log(`num = ${num}`),
     rxjs.noop,
     () => console.log('Fim!')
