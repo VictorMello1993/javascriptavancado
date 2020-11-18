@@ -15,6 +15,26 @@ function firstElement(){
     }
 }
 
+function lastElement() {
+    return function(source){
+        return Observable.create(subscriber => {
+            let last
+            source.subscribe({
+                next(value) {
+                    last = value                    
+                },
+                complete() {
+                    if(last !== undefined){
+                        subscriber.next(last)
+                    }
+                    subscriber.complete()
+                }
+            })
+        })
+    }
+}    
+
 from([1, 2, 3, 4, 5])
-    .pipe(firstElement())
+    .pipe(firstElement(), 
+          lastElement())
     .subscribe(console.log)
