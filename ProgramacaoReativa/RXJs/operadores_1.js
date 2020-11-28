@@ -27,6 +27,15 @@ of(1, 2, 'Victor', false, 'último')
 
 console.log('\n')
 
+// of(1, 2, 'Victor', false, 'último')
+//     .pipe(last())
+//     .pipe(map(v => v[0]))//Obtendo o primeiro caracter da string que representa o último elemento da sequência de dados    
+//     .subscribe(value => {
+//         console.log(`O valor gerado foi ${value}`)
+//     })
+
+//Ou
+
 of(1, 2, 'Victor', false, 'último')
     .pipe(last(),
         map(v => v[0]) //Obtendo o primeiro caracter da string que representa o último elemento da sequência de dados
