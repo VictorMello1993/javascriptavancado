@@ -1,0 +1,26 @@
+					EXEMPLIFICANDO PROJETO 1
+
+
+Pode retornar um JSON de palavras ditas em um seriado e quantas vezes cada palavra aparece:
+
+Ex: 
+{
+  "i": 3456,
+  "you": 2459,
+  "what": 1690
+
+   "house": 300,
+   "that": 3,
+   "leo": 1,
+   "abc"		
+}
+
+Ou também pode retornar um array:
+
+[
+   {"palavra": "i", "qte": 3456},	
+   {"palavra": "you", "qte": 2000},
+   {"palavra": "what", "qte": 550},
+]
+
+Remover caracteres especiais indesejáveis

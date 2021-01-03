@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/VictorMello1993/javascriptavancado#readme",
   "dependencies": {
+    "lodash": "^4.17.20",
     "rxjs": "^6.6.3",
     "xmlhttprequest": "^1.8.0"
   }
