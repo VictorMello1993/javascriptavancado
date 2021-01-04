@@ -8,24 +8,6 @@ const path = pth.join(__dirname, '..', 'dados', 'legendas')
 const tokens = ['?', '_', '""', ',', '@', '<i>', '</i>',
     '\r', '[', ']', '(', ')', '.', '♪', '-', '!']
 
-
-// fn.readDirectoryAsync(path)
-//     .then(fn.filterFilesByExtension('.srt'))
-//     .then(fn.readFilesByPathAsync)
-//     .then(fn.mergeContents)
-//     .then(fn.separateBy('\n'))
-//     .then(fn.removeBlankLines)
-//     .then(fn.removeLinesEndingWithTimeInterval('-->'))
-//     .then(fn.removeOnlyNumbers)
-//     .then(fn.removeTokens(tokens))
-//     .then(fn.mergeContents)
-//     .then(fn.separateBy(' '))
-//     .then(fn.removeBlankLines)
-//     .then(fn.groupElements)
-//     .then(fn.orderByQte('qte', 'desc'))
-//     .then(console.log)
-//     .catch(error => console.log(`Erro: ${error}`))
-
 fn.readDirectoryAsync(path)
     .pipe(
         fn.filterFilesByExtension('.srt'),

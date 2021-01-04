@@ -16,7 +16,7 @@ function getDateNow() {
 }
 
 //Leitura do diretório - Operador de criação do observable
-function readDirectoryAsync(path) {
+function readDirectory(path) {
     return new Observable((subscriber,) => {
         try {
             fs.readdirSync(path).forEach(file => {
@@ -29,7 +29,6 @@ function readDirectoryAsync(path) {
     })
 }
 
-//----------------------------------------------------------------------------------------------
 function filterFilesByExtension(extension) {
     return createPipeableOperator(subscriber => ({
         next(text) {
@@ -39,9 +38,8 @@ function filterFilesByExtension(extension) {
         }
     }))
 }
-//----------------------------------------------------------------------------------------------
 
-function readFileByPathAsync() {
+function readFile() {
     return createPipeableOperator(subscriber => ({
         next(path) {
             try {
@@ -58,12 +56,11 @@ function readFileByPathAsync() {
 function mergeContents() {
     return createPipeableOperator(subscriber => ({
         next(text) {
-            subscriber.next(text.split('').join(' '))
+            subscriber.next(text.split(' ').join(''))
         }
     }))
 }
 
-//--------------------------------------------------------------------------------------------------------------------------------
 function separateBy(token) {
     return createPipeableOperator(subscriber => ({
         next(file) {
@@ -83,22 +80,6 @@ function removeBlankLines() {
         }
     }))
 }
-
-//--------------------------------------------------------------------------------------------------------------------------------
-// Forma tradicional
-function removeLinesEndingWithTimeInterval(lines, textPattern) {
-    return lines.filter(ln => !ln.includes(textPattern))
-}
-
-//Ou
-
-//Função retornando uma outra função
-function removeLinesEndingWithTimeInterval(textPattern) {
-    return function (lines) {
-        return lines.filter(ln => !ln.includes(textPattern))
-    }
-}
-//--------------------------------------------------------------------------------------------------------------------------------
 
 function removeOnlyNumbers() {
     return createPipeableOperator(subscriber => ({
@@ -121,8 +102,6 @@ function removeTokens(tokens) {
     }))
 }
 
-//----------------------------------------------------------------------------------------------
-
 function groupElements() {
     return createPipeableOperator(subscriber => ({
         next(words) {
@@ -135,14 +114,6 @@ function groupElements() {
             subscriber.next(groupedWords)
         }
     }))
-}
-
-function orderByQte(attr, order = 'asc') {
-    return function (array) {
-        const asc = (o1, o2) => o1[attr] - o2[attr]
-        const desc = (o1, o2) => o2[attr] - o1[attr]
-        return array.sort(order === 'asc' ? asc : desc)
-    }
 }
 
 //Operador pipeable que retorna um observable
@@ -163,17 +134,15 @@ function createPipeableOperator(operatorFn) {
 //------------------------------------------------------------------------------------------------------------------------------
 
 module.exports = {
-    readDirectoryAsync,
+    readDirectory,
     filterFilesByExtension,
-    readFileByPathAsync,
+    readFile,
     separateBy,
-    removeBlankLines,
-    removeLinesEndingWithTimeInterval,
+    removeBlankLines,    
     removeOnlyNumbers,
     removeTokens,
     mergeContents,
     groupElements,
-    orderByQte,
     getDateNow
 }
 
